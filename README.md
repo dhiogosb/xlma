@@ -1,5 +1,5 @@
 
-#📥 Instalação como Suplemento (.XLAM)
+📥 Instalação como Suplemento (.XLAM)
 
 Este arquivo deve ser utilizado como Suplemento do Excel (Add-in) para que suas funções personalizadas possam ser usadas como fórmulas na planilha.
 
