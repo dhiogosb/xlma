@@ -1,0 +1,12 @@
+-- Criar cada medida individualmente em Modelagem > Nova medida.
+Ultimo Ano Disponivel = MAX(PopulacaoEstimada[Ano])
+
+Populacao Ultimo Ano =
+VAR AnoFinal = [Ultimo Ano Disponivel]
+RETURN CALCULATE(SUM(PopulacaoEstimada[Populacao]), PopulacaoEstimada[Ano] = AnoFinal)
+
+Variacao Populacional % =
+VAR AnoAtual = MAX(PopulacaoEstimada[Ano])
+VAR Atual = CALCULATE(SUM(PopulacaoEstimada[Populacao]), PopulacaoEstimada[Ano] = AnoAtual)
+VAR Anterior = CALCULATE(SUM(PopulacaoEstimada[Populacao]), FILTER(ALL(PopulacaoEstimada[Ano]), PopulacaoEstimada[Ano] = AnoAtual - 1))
+RETURN DIVIDE(Atual - Anterior, Anterior)
