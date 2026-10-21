@@ -1,13 +1,6 @@
 let
     CodigoMunicipio = "3509502",
-    Url = "https://apisidra.ibge.gov.br/values/t/6579/n6/" & CodigoMunicipio & "/v/9324/p/all?formato=json",
-    Fonte = Json.Document(Web.Contents(Url)),
-    Registros = Table.FromRecords(Fonte),
-    // O primeiro registro da API SIDRA descreve os nomes das colunas.
-    Cabecalho = Record.ToList(Registros{0}),
-    Linhas = Table.Skip(Registros, 1),
-    Renomeada = Table.RenameColumns(Linhas, List.Zip({Table.ColumnNames(Linhas), List.Transform(Cabecalho, each Text.From(_))}), MissingField.Ignore),
-    // Os nomes de colunas da API variam conforme a seleção; utilizamos os identificadores originais.
+    Fonte = Json.Document(Web.Contents("https://apisidra.ibge.gov.br", [RelativePath = "values/t/6579/n6/" & CodigoMunicipio & "/v/9324/p/all", Query = [formato = "json"]])),
     Bruta = Table.FromRecords(List.Skip(Fonte, 1)),
     Campos = Table.SelectColumns(Bruta, {"D1C", "D2C", "V"}, MissingField.UseNull),
     Campinas = Table.SelectRows(Campos, each Text.From([D1C]) = CodigoMunicipio),
